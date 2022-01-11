@@ -1,7 +1,9 @@
 # dependencies
-/node_modules
-
+node_modules
+config
+firebase
 # misc
+.env
 .DS_Store
 .env.local
 .env.development.local
