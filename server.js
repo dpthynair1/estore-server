@@ -14,9 +14,10 @@ const app = express();
 mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
   .then(() => console.log("Connection successful"))
-  .catch((err) => console.log(`DB connection error`));
+  .catch((err) => console.log(`DB connection error`, err));
 
 // Middleware
 app.use(morgan("dev"));
@@ -26,8 +27,14 @@ app.use(cors());
 // routes middleware && autoload all the routes
 //app.use('/api', appRoutes);
 
-fs.readdirSync("./routes").map((r) => 
-app.use('/api', require('./routes/' + r))
+
+app.get("/", (req, res) => {
+  res.send("Backend is live!");
+});
+
+
+fs.readdirSync("./routes").map((r) =>
+  app.use('/api', require('./routes/' + r))
 )
 
 // Port
